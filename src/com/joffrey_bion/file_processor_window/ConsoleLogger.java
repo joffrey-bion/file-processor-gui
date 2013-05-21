@@ -1,6 +1,6 @@
 package com.joffrey_bion.file_processor_window;
 
-public class DefaultPrinterLogger implements Logger {
+public class ConsoleLogger implements Logger {
 
     @Override
     public void println(String line) {
@@ -16,5 +16,4 @@ public class DefaultPrinterLogger implements Logger {
     public void clearLog() {
         // nothing in the console
     }
-
 }

@@ -37,7 +37,7 @@ public class MainExample {
             frame.setVisible(true);
             return;
         } else {
-            processFile(args[ARG_SOURCE], args[ARG_DEST], new DefaultPrinterLogger());
+            processFile(args[ARG_SOURCE], args[ARG_DEST], new ConsoleLogger());
         }
     }
 
