@@ -25,7 +25,7 @@ public class MainExample {
                 e.printStackTrace();
             }
             // file pickers source and destination
-            final JFilePickersPanel filePickers = new JFilePickersPanel("Input file", "Output file");
+            JFilePickersPanel filePickers = new JFilePickersPanel("Input file", "Output file");
             @SuppressWarnings("serial")
             JFileProcessorWindow frame = new JFileProcessorWindow("Pseq File Processor", "Process",
                     filePickers, null) {
@@ -54,7 +54,7 @@ public class MainExample {
             if (dest == null || "".equals(dest)) {
                 log.println("No output file selected.");
                 destFilename = generateDestFilename(source);
-                log.println("> Auto output filename: " + destFilename);
+                log.println("Auto output filename: " + destFilename);
             } else {
                 destFilename = dest;
             }
