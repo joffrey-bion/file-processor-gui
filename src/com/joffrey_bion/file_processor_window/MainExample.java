@@ -81,16 +81,11 @@ public class MainExample {
     private static String addBeforeExt(String sourceName, String insert) {
         int extPosition = sourceName.lastIndexOf(".");
         if (extPosition == -1) {
-            System.out.println(extPosition);
             extPosition = sourceName.length();
-            System.out.println(extPosition);
         }
         StringBuilder b = new StringBuilder(sourceName.substring(0, extPosition));
-        System.out.println(b.toString());
         b.append(insert);
-        System.out.println(b.toString());
         b.append(sourceName.substring(extPosition));
-        System.out.println(b.toString());
         return b.toString();
     }
 }
