@@ -80,11 +80,12 @@ public abstract class JFileProcessorWindow extends JFrame implements Logger {
 
     @Override
     public void printErr(String line) {
-        println(line);
+        println("ERROR: " + line);
     }
 
     @Override
     public void clearLog() {
         logTextArea.setText("");
+        logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
     }
 }
