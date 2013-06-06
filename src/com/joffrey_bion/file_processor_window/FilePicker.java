@@ -75,11 +75,17 @@ public class FilePicker {
         if (userOption == JFileChooser.APPROVE_OPTION && pathTextField != null) {
             pathTextField.setText(fileChooser.getSelectedFile().getAbsolutePath());
         }
+        onSelect();
+    }
+    
+    protected void onSelect() {
+        // nothing by default
     }
 
     public void addFileTypeFilter(String extension, String description) {
         FileTypeFilter filter = new FileTypeFilter(extension, description);
         fileChooser.addChoosableFileFilter(filter);
+        fileChooser.setFileFilter(filter);
     }
 
     public String getSelectedFilePath() {
@@ -90,6 +96,14 @@ public class FilePicker {
             return file.getAbsolutePath();
         } else {
             return pathTextField.getText();
+        }
+    }
+
+    public void setSelectedFilePath(String path) {
+        if (pathTextField == null) {
+            fileChooser.setSelectedFile(new File(path));
+        } else {
+            pathTextField.setText(path);
         }
     }
 
