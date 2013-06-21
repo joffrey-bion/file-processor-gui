@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 public class MainExample {
@@ -17,30 +18,48 @@ public class MainExample {
     private static final int ARG_DEST = 1;
     
     public static void main(String[] args) {
-        if (args.length < NB_ARGS) {
-            // windows system look and feel for the window
-            try {
-                UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            // file pickers source and destination
-            JFilePickersPanel filePickers = new JFilePickersPanel("Input file", "Output file");
-            @SuppressWarnings("serial")
-            JFileProcessorWindow frame = new JFileProcessorWindow("Pseq File Processor", "Process",
-                    filePickers, null) {
+        if (args.length == 0) {
+            SwingUtilities.invokeLater(new Runnable() {
                 @Override
-                public void process(String[] inPaths, String[] outPaths) {
-                    processFile(inPaths[0], outPaths[0], this);
+                public void run() {
+                    openWindow();
                 }
-            };
-            frame.setVisible(true);
-            return;
-        } else {
+            });
+        } else if (args.length == NB_ARGS) {
             processFile(args[ARG_SOURCE], args[ARG_DEST], new ConsoleLogger());
+        } else {
+            printUsage();
         }
     }
+    
+    
+    private static void printUsage() {
+        System.out.println("Usage: java MainExample <source> <dest>");
+    }
 
+    /**
+     * Starts the GUI.
+     */
+    private static void openWindow() {
+     // windows system look and feel for the window
+        try {
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        // file pickers source and destination
+        JFilePickersPanel filePickers = new JFilePickersPanel("Input file", "Output file");
+        @SuppressWarnings("serial")
+        JFileProcessorWindow frame = new JFileProcessorWindow("Pseq File Processor", "Process",
+                filePickers, null) {
+            @Override
+            public void process(String[] inPaths, String[] outPaths) {
+                processFile(inPaths[0], outPaths[0], this);
+            }
+        };
+        frame.setVisible(true);
+    }
+    
     private static void processFile(String source, String dest, Logger log) {
         log.clearLog();
         if (source == null || "".equals(source)) {
