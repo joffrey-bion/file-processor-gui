@@ -1,4 +1,4 @@
-package com.joffrey_bion.file_processor_window;
+package com.joffrey_bion.file_processor_window.logging;
 
 public interface Logger {
 

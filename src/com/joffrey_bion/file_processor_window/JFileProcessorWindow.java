@@ -17,6 +17,9 @@ import javax.swing.border.BevelBorder;
 import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
 
+import com.joffrey_bion.file_processor_window.file_picker.JFilePickersPanel;
+import com.joffrey_bion.file_processor_window.logging.Logger;
+
 @SuppressWarnings("serial")
 public abstract class JFileProcessorWindow extends JFrame implements Logger {
 

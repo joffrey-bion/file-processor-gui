@@ -1,4 +1,4 @@
-package com.joffrey_bion.file_processor_window;
+package com.joffrey_bion.file_processor_window.file_picker;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
@@ -55,8 +55,9 @@ public class FilePicker {
         this.parent = parent;
         this.fileChooser = new JFileChooser();
         this.pathTextField = pathTextField;
-        if (browseButton == null)
+        if (browseButton == null) {
             throw new IllegalArgumentException("browseButton can't be null");
+        }
         browseButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -77,7 +78,7 @@ public class FilePicker {
         }
         onSelect();
     }
-    
+
     protected void onSelect() {
         // nothing by default
     }

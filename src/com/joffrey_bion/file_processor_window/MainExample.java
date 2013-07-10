@@ -10,6 +10,10 @@ import java.io.IOException;
 import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
+import com.joffrey_bion.file_processor_window.file_picker.JFilePickersPanel;
+import com.joffrey_bion.file_processor_window.logging.ConsoleLogger;
+import com.joffrey_bion.file_processor_window.logging.Logger;
+
 public class MainExample {
     
     private static final int NB_ARGS = 2;

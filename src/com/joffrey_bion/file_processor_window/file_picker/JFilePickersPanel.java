@@ -1,4 +1,5 @@
-package com.joffrey_bion.file_processor_window;
+package com.joffrey_bion.file_processor_window.file_picker;
+
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -14,13 +15,19 @@ public class JFilePickersPanel extends JPanel {
 
     private FilePicker[] inFilePickers;
     private FilePicker[] outFilePickers;
+    private JLabel[] inLabels;
+    private JLabel[] outLabels;
+    private JTextField[] inTFPaths;
+    private JTextField[] outTFPaths;
+    private JButton[] inBrowseBtns;
+    private JButton[] outBrowseBtns;
 
     public JFilePickersPanel(String inFileTitle, String outFileTitle) {
-        this(new String[] {inFileTitle}, new String[] {outFileTitle});
+        this(new String[] { inFileTitle }, new String[] { outFileTitle });
     }
 
     public JFilePickersPanel(String[] inFilesTitles, String outFileTitle) {
-        this(inFilesTitles, new String[] {outFileTitle});
+        this(inFilesTitles, new String[] { outFileTitle });
     }
 
     public JFilePickersPanel(String[] inFilesTitles, String[] outFilesTitles) {
@@ -39,24 +46,32 @@ public class JFilePickersPanel extends JPanel {
         }
         setLayout(new FormLayout(colSpec, rowSpec));
         inFilePickers = new FilePicker[nbInFiles];
+        inLabels = new JLabel[nbInFiles];
+        inTFPaths = new JTextField[nbInFiles];
+        inBrowseBtns = new JButton[nbInFiles];
         for (int i = 0; i < nbInFiles; i++) {
-            JLabel lblFileRole = new JLabel(inFilesTitles[i] + ":");
-            add(lblFileRole, "1, " + (2 * i + 1) + ", left, center");
-            JTextField tfPath = new JTextField(30);
-            add(tfPath, "3, " + (2 * i + 1) + ", fill, center");
-            JButton btnBrowse = new JButton("Browse...");
-            add(btnBrowse, "5, " + (2 * i + 1) + ", fill, center");
-            inFilePickers[i] = new FilePicker(this, tfPath, btnBrowse, FilePicker.MODE_OPEN);
+            inLabels[i] = new JLabel(inFilesTitles[i] + ":");
+            add(inLabels[i], "1, " + (2 * i + 1) + ", left, center");
+            inTFPaths[i] = new JTextField(30);
+            add(inTFPaths[i], "3, " + (2 * i + 1) + ", fill, center");
+            inBrowseBtns[i] = new JButton("Browse...");
+            add(inBrowseBtns[i], "5, " + (2 * i + 1) + ", fill, center");
+            inFilePickers[i] = new FilePicker(this, inTFPaths[i], inBrowseBtns[i],
+                    FilePicker.MODE_OPEN);
         }
         outFilePickers = new FilePicker[nbOutFiles];
+        outLabels = new JLabel[nbOutFiles];
+        outTFPaths = new JTextField[nbOutFiles];
+        outBrowseBtns = new JButton[nbOutFiles];
         for (int i = 0; i < nbOutFiles; i++) {
-            JLabel lblFileRole = new JLabel(outFilesTitles[i] + ":");
-            add(lblFileRole, "1, " + (2 * (nbInFiles + i) + 1) + ", left, center");
-            JTextField tfPath = new JTextField(30);
-            add(tfPath, "3, " + (2 * (nbInFiles + i) + 1) + ", fill, center");
-            JButton btnBrowse = new JButton("Browse...");
-            add(btnBrowse, "5, " + (2 * (nbInFiles + i) + 1) + ", fill, center");
-            outFilePickers[i] = new FilePicker(this, tfPath, btnBrowse, FilePicker.MODE_SAVE);
+            outLabels[i] = new JLabel(outFilesTitles[i] + ":");
+            add(outLabels[i], "1, " + (2 * (nbInFiles + i) + 1) + ", left, center");
+            outTFPaths[i] = new JTextField(30);
+            add(outTFPaths[i], "3, " + (2 * (nbInFiles + i) + 1) + ", fill, center");
+            outBrowseBtns[i] = new JButton("Browse...");
+            add(outBrowseBtns[i], "5, " + (2 * (nbInFiles + i) + 1) + ", fill, center");
+            outFilePickers[i] = new FilePicker(this, outTFPaths[i], outBrowseBtns[i],
+                    FilePicker.MODE_SAVE);
         }
     }
 
@@ -67,7 +82,7 @@ public class JFilePickersPanel extends JPanel {
     public FilePicker[] getOutputFilePickers() {
         return outFilePickers;
     }
-    
+
     private static String[] getSelectedPaths(FilePicker[] filePickers) {
         String[] inputPaths = new String[filePickers.length];
         for (int i = 0; i < inputPaths.length; i++) {
@@ -75,12 +90,24 @@ public class JFilePickersPanel extends JPanel {
         }
         return inputPaths;
     }
-    
+
     public String[] getInputFilePaths() {
         return getSelectedPaths(inFilePickers);
     }
 
     public String[] getOutputFilePaths() {
         return getSelectedPaths(outFilePickers);
+    }
+
+    public void setInputFilePickerEnabled(int filePickerIndex, boolean enabled) {
+        inLabels[filePickerIndex].setEnabled(enabled);
+        inTFPaths[filePickerIndex].setEnabled(enabled);
+        inBrowseBtns[filePickerIndex].setEnabled(enabled);
+    }
+
+    public void setOutputFilePickerEnabled(int filePickerIndex, boolean enabled) {
+        outLabels[filePickerIndex].setEnabled(enabled);
+        outTFPaths[filePickerIndex].setEnabled(enabled);
+        outBrowseBtns[filePickerIndex].setEnabled(enabled);
     }
 }
