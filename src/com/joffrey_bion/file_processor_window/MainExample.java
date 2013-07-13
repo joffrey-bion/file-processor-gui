@@ -52,7 +52,7 @@ public class MainExample {
         // file pickers source and destination
         JFilePickersPanel filePickers = new JFilePickersPanel("Input file", "Output file");
         @SuppressWarnings("serial")
-        JFileProcessorWindow frame = new JFileProcessorWindow("Pseq File Processor", "Process",
+        JFileProcessorWindow frame = new JFileProcessorWindow("Example", "Process",
                 filePickers, null) {
             @Override
             public void process(String[] inPaths, String[] outPaths) {

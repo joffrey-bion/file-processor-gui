@@ -35,27 +35,23 @@ public class PrintStreamCapturer extends PrintStream {
         if (s.length == 0)
             return;
         for (int i = 0; i < s.length - 1; i++) {
-            writeNoNewLine(s[i]);
-            goToNextLine();
+            writeWithPotentialIndent(s[i]);
+            writeWithPotentialIndent("\n");
+            atLineStart = true;
         }
         String last = s[s.length - 1];
         if (!last.equals("")) {
-            writeNoNewLine(last);
+            writeWithPotentialIndent(last);
         }
     }
     
-    private void writeNoNewLine(String s) {
+    private void writeWithPotentialIndent(String s) {
         if (atLineStart) {
             writeToTextArea(indent + s);
             atLineStart = false;
         } else {
             writeToTextArea(s);
         }
-    }
-
-    private void goToNextLine() {
-        writeNoNewLine("\n");
-        atLineStart = true;
     }
 
     private void newLine() {
