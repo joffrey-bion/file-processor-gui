@@ -18,10 +18,10 @@ import javax.swing.JSeparator;
 import javax.swing.JScrollPane;
 
 import com.joffrey_bion.file_processor_window.file_picker.JFilePickersPanel;
-import com.joffrey_bion.file_processor_window.logging.Logger;
+import com.joffrey_bion.file_processor_window.logging.PrintStreamCapturer;
 
 @SuppressWarnings("serial")
-public abstract class JFileProcessorWindow extends JFrame implements Logger {
+public abstract class JFileProcessorWindow extends JFrame {
 
     private JPanel contentPane;
     private JTextArea logTextArea;
@@ -71,22 +71,12 @@ public abstract class JFileProcessorWindow extends JFrame implements Logger {
         logTextArea.setRows(8);
         JScrollPane scrollPane = new JScrollPane(logTextArea);
         logPanel.add(scrollPane, BorderLayout.CENTER);
+        System.setOut(new PrintStreamCapturer(logTextArea, System.out));
+        System.setErr(new PrintStreamCapturer(logTextArea, System.err, "[ERROR] "));
     }
 
     public abstract void process(String[] inFilesPaths, String[] outFilesPaths);
 
-    @Override
-    public void println(String line) {
-        logTextArea.append(line + "\n");
-        logTextArea.setCaretPosition(logTextArea.getDocument().getLength());
-    }
-
-    @Override
-    public void printErr(String line) {
-        println("ERROR: " + line);
-    }
-
-    @Override
     public void clearLog() {
         logTextArea.setText("");
         logTextArea.setCaretPosition(logTextArea.getDocument().getLength());

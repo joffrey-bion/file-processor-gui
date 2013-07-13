@@ -11,8 +11,6 @@ import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import com.joffrey_bion.file_processor_window.file_picker.JFilePickersPanel;
-import com.joffrey_bion.file_processor_window.logging.ConsoleLogger;
-import com.joffrey_bion.file_processor_window.logging.Logger;
 
 public class MainExample {
     
@@ -30,7 +28,7 @@ public class MainExample {
                 }
             });
         } else if (args.length == NB_ARGS) {
-            processFile(args[ARG_SOURCE], args[ARG_DEST], new ConsoleLogger());
+            processFile(args[ARG_SOURCE], args[ARG_DEST]);
         } else {
             printUsage();
         }
@@ -58,42 +56,42 @@ public class MainExample {
                 filePickers, null) {
             @Override
             public void process(String[] inPaths, String[] outPaths) {
-                processFile(inPaths[0], outPaths[0], this);
+                clearLog();
+                processFile(inPaths[0], outPaths[0]);
             }
         };
         frame.setVisible(true);
     }
     
-    private static void processFile(String source, String dest, Logger log) {
-        log.clearLog();
+    private static void processFile(String source, String dest) {
         if (source == null || "".equals(source)) {
-            log.printErr("No input file selected.");
+            System.err.println("No input file selected.");
             return;
         }
         try {
-            log.println("Opening '" + source + "'");
+            System.out.println("Opening '" + source + "'");
             BufferedReader in = new BufferedReader(new FileReader(source));
             String destFilename;
             if (dest == null || "".equals(dest)) {
-                log.println("No output file selected.");
+                System.out.println("No output file selected.");
                 destFilename = generateDestFilename(source);
-                log.println("Auto output filename: " + destFilename);
+                System.out.println("Auto output filename: " + destFilename);
             } else {
                 destFilename = dest;
             }
-            log.println("Opening/Creating '" + destFilename + "'");
+            System.out.println("Opening/Creating '" + destFilename + "'");
             BufferedWriter out = new BufferedWriter(new FileWriter(destFilename));
-            log.println("Processing...");
+            System.out.println("Processing...");
 
             // TODO process the file here
             
-            log.println("Success.");
+            System.out.println("Success.");
             in.close();
             out.close();
         } catch (FileNotFoundException e) {
-            log.printErr("File not found: " + e.getMessage());
+            System.err.println("File not found: " + e.getMessage());
         } catch (IOException e) {
-            log.printErr(e.getMessage());
+            System.err.println(e.getMessage());
         }
     }
 
