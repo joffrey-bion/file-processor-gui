@@ -22,6 +22,10 @@ public class JFilePickersPanel extends JPanel {
     private JButton[] inBrowseBtns;
     private JButton[] outBrowseBtns;
 
+    public JFilePickersPanel() {
+        this("Input", "Output");
+    }
+
     public JFilePickersPanel(String inFileTitle, String outFileTitle) {
         this(new String[] { inFileTitle }, new String[] { outFileTitle });
     }
