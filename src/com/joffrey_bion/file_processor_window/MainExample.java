@@ -8,7 +8,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.SwingUtilities;
-import javax.swing.UIManager;
 
 import com.joffrey_bion.file_processor_window.file_picker.JFilePickersPanel;
 
@@ -43,12 +42,7 @@ public class MainExample {
      * Starts the GUI.
      */
     private static void openWindow() {
-     // windows system look and feel for the window
-        try {
-            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        JFileProcessorWindow.setSystemLookAndFeel();
         // file pickers source and destination
         JFilePickersPanel filePickers = new JFilePickersPanel("Input file", "Output file");
         @SuppressWarnings("serial")

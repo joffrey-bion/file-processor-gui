@@ -2,8 +2,11 @@ package com.joffrey_bion.file_processor_window;
 
 import java.awt.BorderLayout;
 
+import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
@@ -27,6 +30,15 @@ public abstract class JFileProcessorWindow extends JFrame {
     private JPanel contentPane;
     private JTextArea logTextArea;
 
+    public static void setSystemLookAndFeel() {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
+    }
+
     public JFileProcessorWindow(String title, String processBtnText,
             final JFilePickersPanel filePickers, JPanel parameters) {
         setTitle(title);
@@ -39,7 +51,6 @@ public abstract class JFileProcessorWindow extends JFrame {
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.setBorder(new EmptyBorder(5, 5, 5, 5));
-        contentPane.add(panel);
         if (filePickers != null) {
             panel.add(filePickers);
             panel.add(Box.createVerticalStrut(5));
@@ -63,7 +74,7 @@ public abstract class JFileProcessorWindow extends JFrame {
                 process(filePickers.getInputFilePaths(), filePickers.getOutputFilePaths());
             }
         });
-        
+
         // log area
         JPanel logPanel = new JPanel();
         logPanel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
@@ -72,18 +83,19 @@ public abstract class JFileProcessorWindow extends JFrame {
         logTextArea.setEditable(false);
         logTextArea.setRows(8);
         JScrollPane scrollPane = new JScrollPane(logTextArea);
+        scrollPane.setBorder(BorderFactory.createEmptyBorder());
         logPanel.add(scrollPane, BorderLayout.CENTER);
         System.setOut(new PrintStreamCapturer(logTextArea, System.out));
         System.setErr(new PrintStreamCapturer(logTextArea, System.err, "[ERROR] "));
-        
+
         JSplitPane splitPane = new JSplitPane();
         splitPane.setAlignmentX(Component.CENTER_ALIGNMENT);
         splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
         splitPane.setTopComponent(panel);
         splitPane.setBottomComponent(logPanel);
+        splitPane.setBorder(BorderFactory.createEmptyBorder());
         contentPane.add(splitPane);
 
-        
     }
 
     public abstract void process(String[] inFilesPaths, String[] outFilesPaths);
