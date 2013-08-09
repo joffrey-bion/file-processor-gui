@@ -10,10 +10,10 @@ public class PrintStreamCapturer extends PrintStream {
     private boolean atLineStart;
     private String indent;
 
-    public PrintStreamCapturer(JTextArea textArea, PrintStream capturedStream, String indent) {
+    public PrintStreamCapturer(JTextArea textArea, PrintStream capturedStream, String prefix) {
         super(capturedStream);
         this.text = textArea;
-        this.indent = indent;
+        this.indent = prefix;
         this.atLineStart = true;
     }
 

@@ -22,10 +22,13 @@ import javax.swing.JScrollPane;
 
 import com.joffrey_bion.file_processor_window.file_picker.JFilePickersPanel;
 import com.joffrey_bion.file_processor_window.logging.PrintStreamCapturer;
+
 import javax.swing.JSplitPane;
 
 @SuppressWarnings("serial")
 public abstract class JFileProcessorWindow extends JFrame {
+
+    private static final String ERROR_PREFIX = "[ERROR] ";
 
     private JPanel contentPane;
     private JTextArea logTextArea;
@@ -48,30 +51,34 @@ public abstract class JFileProcessorWindow extends JFrame {
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-        JPanel panel = new JPanel();
-        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-        panel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        JPanel paramPanel = new JPanel();
+        paramPanel.setLayout(new BoxLayout(paramPanel, BoxLayout.Y_AXIS));
+        paramPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         if (filePickers != null) {
-            panel.add(filePickers);
-            panel.add(Box.createVerticalStrut(5));
-            panel.add(new JSeparator());
-            panel.add(Box.createVerticalStrut(5));
+            paramPanel.add(filePickers);
+            paramPanel.add(Box.createVerticalStrut(5));
+            paramPanel.add(new JSeparator());
+            paramPanel.add(Box.createVerticalStrut(5));
         }
         if (parameters != null) {
-            panel.add(parameters);
-            panel.add(Box.createVerticalStrut(5));
-            panel.add(new JSeparator());
-            panel.add(Box.createVerticalStrut(5));
+            paramPanel.add(parameters);
+            paramPanel.add(Box.createVerticalStrut(5));
+            paramPanel.add(new JSeparator());
+            paramPanel.add(Box.createVerticalStrut(5));
         }
 
         // process start button
         JButton btnProcess = new JButton(processBtnText);
         btnProcess.setAlignmentX(Component.CENTER_ALIGNMENT);
-        panel.add(btnProcess);
+        paramPanel.add(btnProcess);
         btnProcess.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                process(filePickers.getInputFilePaths(), filePickers.getOutputFilePaths());
+                if (filePickers == null) {
+                    process(null, null);
+                } else {
+                    process(filePickers.getInputFilePaths(), filePickers.getOutputFilePaths());
+                }
             }
         });
 
@@ -85,17 +92,17 @@ public abstract class JFileProcessorWindow extends JFrame {
         JScrollPane scrollPane = new JScrollPane(logTextArea);
         scrollPane.setBorder(BorderFactory.createEmptyBorder());
         logPanel.add(scrollPane, BorderLayout.CENTER);
-        System.setOut(new PrintStreamCapturer(logTextArea, System.out));
-        System.setErr(new PrintStreamCapturer(logTextArea, System.err, "[ERROR] "));
 
         JSplitPane splitPane = new JSplitPane();
         splitPane.setAlignmentX(Component.CENTER_ALIGNMENT);
         splitPane.setOrientation(JSplitPane.VERTICAL_SPLIT);
-        splitPane.setTopComponent(panel);
+        splitPane.setTopComponent(paramPanel);
         splitPane.setBottomComponent(logPanel);
         splitPane.setBorder(BorderFactory.createEmptyBorder());
         contentPane.add(splitPane);
 
+        System.setOut(new PrintStreamCapturer(logTextArea, System.out));
+        System.setErr(new PrintStreamCapturer(logTextArea, System.err, ERROR_PREFIX));
     }
 
     public abstract void process(String[] inFilesPaths, String[] outFilesPaths);
