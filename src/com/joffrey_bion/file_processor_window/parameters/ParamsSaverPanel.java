@@ -21,7 +21,7 @@ public abstract class ParamsSaverPanel extends JPanel {
             @Override
             protected void onSelect() {
                 String paramFilePath = getSelectedFilePath();
-                loadParamsFromFile(paramFilePath);
+                saveParamsToFile(paramFilePath);
             }
         };
         saveFilePicker.addFileTypeFilter(".xml", "XML Parameter File");

@@ -103,6 +103,16 @@ public class JFilePickersPanel extends JPanel {
         return getSelectedPaths(outFilePickers);
     }
 
+    public void setInputFilePickerEditable(int filePickerIndex, boolean editable) {
+        inTFPaths[filePickerIndex].setEditable(editable);
+        inBrowseBtns[filePickerIndex].setEnabled(editable);
+    }
+
+    public void setOutputFilePickerEditable(int filePickerIndex, boolean editable) {
+        outTFPaths[filePickerIndex].setEditable(editable);
+        outBrowseBtns[filePickerIndex].setEnabled(editable);
+    }
+
     public void setInputFilePickerEnabled(int filePickerIndex, boolean enabled) {
         inLabels[filePickerIndex].setEnabled(enabled);
         inTFPaths[filePickerIndex].setEnabled(enabled);
