@@ -1,4 +1,4 @@
-package com.joffrey_bion.file_processor_window.logging;
+package com.joffrey_bion.generic_guis.logging;
 
 import java.io.PrintStream;
 

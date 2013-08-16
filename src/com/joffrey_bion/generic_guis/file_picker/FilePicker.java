@@ -1,4 +1,4 @@
-package com.joffrey_bion.file_processor_window.file_picker;
+package com.joffrey_bion.generic_guis.file_picker;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;

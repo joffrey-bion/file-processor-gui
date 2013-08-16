@@ -1,0 +1,43 @@
+package com.joffrey_bion.generic_guis.file_editor;
+
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import javax.swing.JSeparator;
+import javax.swing.border.EmptyBorder;
+
+import com.joffrey_bion.generic_guis.logging.JLoggerWindow;
+import com.joffrey_bion.generic_guis.parameters.SaveLoadPanel;
+
+@SuppressWarnings("serial")
+public abstract class JFileEditorWindow extends JLoggerWindow {
+
+    public JFileEditorWindow(String title, JPanel content) {
+        super(title);
+        JPanel paramPanel = new JPanel();
+        paramPanel.setLayout(new BoxLayout(paramPanel, BoxLayout.Y_AXIS));
+        paramPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
+        if (content != null) {
+            paramPanel.add(content);
+            paramPanel.add(Box.createVerticalStrut(5));
+            paramPanel.add(new JSeparator());
+            paramPanel.add(Box.createVerticalStrut(5));
+        }
+        paramPanel.add(new SaveLoadPanel() {
+            @Override
+            public void saveToFile(String filePath) {
+                JFileEditorWindow.this.saveToFile(filePath);
+            }
+
+            @Override
+            public void loadFromFile(String filePath) {
+                JFileEditorWindow.this.loadFromFile(filePath);
+            }
+        });
+        setContent(paramPanel);
+    }
+
+    public abstract void saveToFile(String filePath);
+
+    public abstract void loadFromFile(String filePath);
+}
