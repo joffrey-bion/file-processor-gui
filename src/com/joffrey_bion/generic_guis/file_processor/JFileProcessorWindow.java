@@ -43,11 +43,17 @@ public abstract class JFileProcessorWindow extends JLoggerWindow {
         btnProcess.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (filePickers == null) {
-                    process(null, null);
-                } else {
-                    process(filePickers.getInputFilePaths(), filePickers.getOutputFilePaths());
-                }
+                new Thread() {
+                    @Override
+                    public void run() {
+                        if (filePickers == null) {
+                            process(null, null);
+                        } else {
+                            process(filePickers.getInputFilePaths(), filePickers
+                                    .getOutputFilePaths());
+                        }
+                    }
+                }.run();
             }
         });
         setContent(paramPanel);
