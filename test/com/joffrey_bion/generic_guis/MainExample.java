@@ -47,10 +47,10 @@ public class MainExample {
         // file pickers source and destination
         JFilePickersPanel filePickers = new JFilePickersPanel("Input file", "Output file");
         @SuppressWarnings("serial")
-        JFileProcessorWindow frame = new JFileProcessorWindow("Example", "Process",
-                filePickers, null) {
+        JFileProcessorWindow frame = new JFileProcessorWindow("Example", filePickers,
+                null, "Process") {
             @Override
-            public void process(String[] inPaths, String[] outPaths) {
+            public void process(String[] inPaths, String[] outPaths, int processBtnIndex) {
                 clearLog();
                 processFile(inPaths[0], outPaths[0]);
             }

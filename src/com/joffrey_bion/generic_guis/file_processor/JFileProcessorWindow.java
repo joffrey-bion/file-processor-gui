@@ -13,12 +13,13 @@ import javax.swing.JSeparator;
 
 import com.joffrey_bion.generic_guis.file_picker.JFilePickersPanel;
 import com.joffrey_bion.generic_guis.logging.JLoggerWindow;
+import java.awt.FlowLayout;
 
 @SuppressWarnings("serial")
 public abstract class JFileProcessorWindow extends JLoggerWindow {
 
-    public JFileProcessorWindow(String title, String processBtnText,
-            final JFilePickersPanel filePickers, JPanel parameters) {
+    public JFileProcessorWindow(String title, final JFilePickersPanel filePickers,
+            JPanel parameters, String... processBtnText) {
         super(title);
         JPanel paramPanel = new JPanel();
         paramPanel.setLayout(new BoxLayout(paramPanel, BoxLayout.Y_AXIS));
@@ -36,29 +37,47 @@ public abstract class JFileProcessorWindow extends JLoggerWindow {
             paramPanel.add(Box.createVerticalStrut(5));
         }
 
+        JPanel processBtnsPanel = new JPanel();
+        paramPanel.add(processBtnsPanel);
+        processBtnsPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
         // process start button
-        JButton btnProcess = new JButton(processBtnText);
-        btnProcess.setAlignmentX(Component.CENTER_ALIGNMENT);
-        paramPanel.add(btnProcess);
-        btnProcess.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                new Thread() {
-                    @Override
-                    public void run() {
-                        if (filePickers == null) {
-                            process(null, null);
-                        } else {
-                            process(filePickers.getInputFilePaths(), filePickers
-                                    .getOutputFilePaths());
-                        }
-                    }
-                }.run();
-            }
-        });
+        JButton[] btnProcess = new JButton[processBtnText.length];
+        for (int i = 0; i < processBtnText.length; i++) {
+            btnProcess[i] = new JButton(processBtnText[i]);
+            btnProcess[i].setAlignmentX(Component.CENTER_ALIGNMENT);
+            processBtnsPanel.add(btnProcess[i]);
+            btnProcess[i].addActionListener(new ProcessListener(filePickers, i));
+        }
         setContent(paramPanel);
+
     }
 
-    public abstract void process(String[] inFilesPaths, String[] outFilesPaths);
+    private class ProcessListener implements ActionListener {
+        private JFilePickersPanel filePickers;
+        private int btnIndex;
+
+        public ProcessListener(final JFilePickersPanel filePickers, int btnIndex) {
+            this.filePickers = filePickers;
+            this.btnIndex = btnIndex;
+        }
+
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            new Thread() {
+                @Override
+                public void run() {
+                    if (filePickers == null) {
+                        process(null, null, btnIndex);
+                    } else {
+                        process(filePickers.getInputFilePaths(), filePickers.getOutputFilePaths(),
+                                btnIndex);
+                    }
+                }
+            }.run();
+        }
+
+    }
+
+    public abstract void process(String[] inFilesPaths, String[] outFilesPaths, int processBtnIndex);
 
 }
