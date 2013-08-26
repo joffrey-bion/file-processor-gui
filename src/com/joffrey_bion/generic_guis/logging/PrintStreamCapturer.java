@@ -3,6 +3,7 @@ package com.joffrey_bion.generic_guis.logging;
 import java.io.PrintStream;
 
 import javax.swing.JTextArea;
+import javax.swing.SwingUtilities;
 
 public class PrintStreamCapturer extends PrintStream {
 
@@ -21,12 +22,18 @@ public class PrintStreamCapturer extends PrintStream {
         this(textArea, capturedStream, "");
     }
 
-    private void writeToTextArea(String str) {
+    private void writeToTextArea(final String str) {
         if (text != null) {
-            synchronized (text) {
-                text.setCaretPosition(text.getDocument().getLength());
-                text.append(str);
-            }
+            SwingUtilities.invokeLater(new Runnable() {
+                @Override
+                public void run() {
+                    synchronized (text) {
+                        text.setCaretPosition(text.getDocument().getLength());
+                        text.append(str);
+                    }
+                }
+            });
+
         }
     }
 
@@ -44,7 +51,7 @@ public class PrintStreamCapturer extends PrintStream {
             writeWithPotentialIndent(last);
         }
     }
-    
+
     private void writeWithPotentialIndent(String s) {
         if (atLineStart) {
             writeToTextArea(indent + s);
