@@ -1,4 +1,4 @@
-package com.jbion.utils.fpgui;
+package org.hildan.utils.fpgui;
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;

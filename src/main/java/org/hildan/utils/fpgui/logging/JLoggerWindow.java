@@ -1,4 +1,4 @@
-package com.jbion.utils.fpgui.logging;
+package org.hildan.utils.fpgui.logging;
 
 import java.awt.BorderLayout;
 import java.awt.Component;

@@ -1,4 +1,4 @@
-package com.jbion.utils.fpgui.fpickers;
+package org.hildan.utils.fpgui.fpickers;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;

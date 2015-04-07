@@ -9,9 +9,9 @@ import java.io.IOException;
 
 import javax.swing.SwingUtilities;
 
-import com.jbion.utils.fpgui.LookAndFeel;
-import com.jbion.utils.fpgui.fpickers.JFilePickersPanel;
-import com.jbion.utils.fpgui.gwindows.JFileProcessorWindow;
+import org.hildan.utils.fpgui.LookAndFeel;
+import org.hildan.utils.fpgui.fpickers.JFilePickersPanel;
+import org.hildan.utils.fpgui.gwindows.JFileProcessorWindow;
 
 public class MainExample {
 

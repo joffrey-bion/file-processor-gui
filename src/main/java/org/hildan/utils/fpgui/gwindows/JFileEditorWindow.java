@@ -1,4 +1,4 @@
-package com.jbion.utils.fpgui.gwindows;
+package org.hildan.utils.fpgui.gwindows;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -6,8 +6,8 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 
-import com.jbion.utils.fpgui.logging.JLoggerWindow;
-import com.jbion.utils.fpgui.parameters.SaveLoadPanel;
+import org.hildan.utils.fpgui.logging.JLoggerWindow;
+import org.hildan.utils.fpgui.parameters.SaveLoadPanel;
 
 @SuppressWarnings("serial")
 public abstract class JFileEditorWindow extends JLoggerWindow {

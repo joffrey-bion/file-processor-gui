@@ -1,4 +1,4 @@
-package com.jbion.utils.fpgui.parameters;
+package org.hildan.utils.fpgui.parameters;
 
 import java.awt.FlowLayout;
 import java.io.IOException;
@@ -6,7 +6,7 @@ import java.io.IOException;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
-import com.jbion.utils.fpgui.fpickers.FilePicker;
+import org.hildan.utils.fpgui.fpickers.FilePicker;
 
 @SuppressWarnings("serial")
 public abstract class SaveLoadPanel extends JPanel {

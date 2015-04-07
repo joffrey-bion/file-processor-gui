@@ -1,4 +1,4 @@
-package com.jbion.utils.fpgui.gwindows;
+package org.hildan.utils.fpgui.gwindows;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
@@ -12,8 +12,8 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.border.EmptyBorder;
 
-import com.jbion.utils.fpgui.fpickers.JFilePickersPanel;
-import com.jbion.utils.fpgui.logging.JLoggerWindow;
+import org.hildan.utils.fpgui.fpickers.JFilePickersPanel;
+import org.hildan.utils.fpgui.logging.JLoggerWindow;
 
 @SuppressWarnings("serial")
 public abstract class JFileProcessorWindow extends JLoggerWindow {

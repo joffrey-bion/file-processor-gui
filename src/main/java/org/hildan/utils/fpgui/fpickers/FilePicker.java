@@ -1,4 +1,4 @@
-package com.jbion.utils.fpgui.fpickers;
+package org.hildan.utils.fpgui.fpickers;
 
 import java.awt.Component;
 import java.io.File;
