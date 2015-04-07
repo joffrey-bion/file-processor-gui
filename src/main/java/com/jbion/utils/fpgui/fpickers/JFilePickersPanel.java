@@ -12,69 +12,75 @@ import javax.swing.JTextField;
 @SuppressWarnings("serial")
 public class JFilePickersPanel extends JPanel {
 
-    private FilePicker[] inFilePickers;
-    private FilePicker[] outFilePickers;
-    private JLabel[] inLabels;
-    private JLabel[] outLabels;
-    private JTextField[] inTFPaths;
-    private JTextField[] outTFPaths;
-    private JButton[] inBrowseBtns;
-    private JButton[] outBrowseBtns;
+    private final FilePicker[] inFilePickers;
+
+    private final FilePicker[] outFilePickers;
+
+    private final JLabel[] inLabels;
+
+    private final JLabel[] outLabels;
+
+    private final JTextField[] inTFPaths;
+
+    private final JTextField[] outTFPaths;
+
+    private final JButton[] inBrowseBtns;
+
+    private final JButton[] outBrowseBtns;
 
     public JFilePickersPanel() {
         this("Input", "Output");
     }
 
     public JFilePickersPanel(String inFileTitle, String outFileTitle) {
-        this(new String[] { inFileTitle }, new String[] { outFileTitle });
+        this(new String[] {inFileTitle}, new String[] {outFileTitle});
     }
 
     public JFilePickersPanel(String[] inFilesTitles, String outFileTitle) {
-        this(inFilesTitles, new String[] { outFileTitle });
+        this(inFilesTitles, new String[] {outFileTitle});
     }
 
     public JFilePickersPanel(String[] inFilesTitles, String[] outFilesTitles) {
-        int nbInFiles = inFilesTitles.length;
-        int nbOutFiles = outFilesTitles.length;
-        GridBagLayout gbl = new GridBagLayout();
-        gbl.columnWidths = new int[] { 0, 0, 0 };
-        gbl.rowHeights = new int[] { 0 };
-        gbl.columnWeights = new double[] { 0.0, 1.0, 0.0 };
-        gbl.rowWeights = new double[] { 0.0 };
+        final int nbInFiles = inFilesTitles.length;
+        final int nbOutFiles = outFilesTitles.length;
+        final GridBagLayout gbl = new GridBagLayout();
+        gbl.columnWidths = new int[] {0, 0, 0};
+        gbl.rowHeights = new int[] {0};
+        gbl.columnWeights = new double[] {0.0, 1.0, 0.0};
+        gbl.rowWeights = new double[] {0.0};
         setLayout(gbl);
-        
+
         inFilePickers = new FilePicker[nbInFiles];
         inLabels = new JLabel[nbInFiles];
         inTFPaths = new JTextField[nbInFiles];
         inBrowseBtns = new JButton[nbInFiles];
         for (int i = 0; i < nbInFiles; i++) {
             inLabels[i] = new JLabel(inFilesTitles[i] + ":");
-            GridBagConstraints gbcLabel = new GridBagConstraints();
+            final GridBagConstraints gbcLabel = new GridBagConstraints();
             gbcLabel.anchor = GridBagConstraints.WEST;
             gbcLabel.insets = new Insets(0, 0, 2, 5);
             gbcLabel.gridx = 0;
             gbcLabel.gridy = i;
             add(inLabels[i], gbcLabel);
-            
+
             inTFPaths[i] = new JTextField(30);
-            GridBagConstraints gbcPath = new GridBagConstraints();
+            final GridBagConstraints gbcPath = new GridBagConstraints();
             gbcPath.anchor = GridBagConstraints.CENTER;
             gbcPath.fill = GridBagConstraints.HORIZONTAL;
             gbcPath.insets = new Insets(0, 0, 2, 5);
             gbcPath.gridx = 1;
             gbcPath.gridy = i;
             add(inTFPaths[i], gbcPath);
-            
+
             inBrowseBtns[i] = new JButton("Browse...");
-            GridBagConstraints gbcBtn = new GridBagConstraints();
+            final GridBagConstraints gbcBtn = new GridBagConstraints();
             gbcBtn.anchor = GridBagConstraints.CENTER;
             gbcBtn.insets = new Insets(0, 0, 2, 0);
             gbcBtn.gridx = 2;
             gbcBtn.gridy = i;
             add(inBrowseBtns[i], gbcBtn);
-            
-            inFilePickers[i] = new FilePicker(this, inTFPaths[i], inBrowseBtns[i],
-                    FilePicker.MODE_OPEN);
+
+            inFilePickers[i] = new FilePicker(this, inTFPaths[i], inBrowseBtns[i], FilePicker.MODE_OPEN);
         }
         outFilePickers = new FilePicker[nbOutFiles];
         outLabels = new JLabel[nbOutFiles];
@@ -82,32 +88,31 @@ public class JFilePickersPanel extends JPanel {
         outBrowseBtns = new JButton[nbOutFiles];
         for (int i = 0; i < nbOutFiles; i++) {
             outLabels[i] = new JLabel(outFilesTitles[i] + ":");
-            GridBagConstraints gbcLabel = new GridBagConstraints();
+            final GridBagConstraints gbcLabel = new GridBagConstraints();
             gbcLabel.anchor = GridBagConstraints.WEST;
             gbcLabel.insets = new Insets(0, 0, 2, 5);
             gbcLabel.gridx = 0;
             gbcLabel.gridy = i + nbInFiles;
             add(outLabels[i], gbcLabel);
-            
+
             outTFPaths[i] = new JTextField(30);
-            GridBagConstraints gbcPath = new GridBagConstraints();
+            final GridBagConstraints gbcPath = new GridBagConstraints();
             gbcPath.anchor = GridBagConstraints.CENTER;
             gbcPath.fill = GridBagConstraints.HORIZONTAL;
             gbcPath.insets = new Insets(0, 0, 2, 5);
             gbcPath.gridx = 1;
             gbcPath.gridy = i + nbInFiles;
             add(outTFPaths[i], gbcPath);
-            
+
             outBrowseBtns[i] = new JButton("Browse...");
-            GridBagConstraints gbcBtn = new GridBagConstraints();
+            final GridBagConstraints gbcBtn = new GridBagConstraints();
             gbcBtn.anchor = GridBagConstraints.CENTER;
             gbcBtn.insets = new Insets(0, 0, 2, 0);
             gbcBtn.gridx = 2;
             gbcBtn.gridy = i + nbInFiles;
             add(outBrowseBtns[i], gbcBtn);
-            
-            outFilePickers[i] = new FilePicker(this, outTFPaths[i], outBrowseBtns[i],
-                    FilePicker.MODE_SAVE);
+
+            outFilePickers[i] = new FilePicker(this, outTFPaths[i], outBrowseBtns[i], FilePicker.MODE_SAVE);
         }
     }
 
@@ -120,7 +125,7 @@ public class JFilePickersPanel extends JPanel {
     }
 
     private static String[] getSelectedPaths(FilePicker[] filePickers) {
-        String[] inputPaths = new String[filePickers.length];
+        final String[] inputPaths = new String[filePickers.length];
         for (int i = 0; i < inputPaths.length; i++) {
             inputPaths[i] = filePickers[i].getSelectedFilePath();
         }

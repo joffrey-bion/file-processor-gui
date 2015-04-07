@@ -11,8 +11,9 @@ import com.jbion.utils.fpgui.fpickers.FilePicker;
 @SuppressWarnings("serial")
 public abstract class SaveLoadPanel extends JPanel {
 
-    private FilePicker saveFilePicker;
-    private FilePicker loadFilePicker;
+    private final FilePicker saveFilePicker;
+
+    private final FilePicker loadFilePicker;
 
     public SaveLoadPanel() {
         this("Save...", "Load...");
@@ -20,35 +21,37 @@ public abstract class SaveLoadPanel extends JPanel {
 
     public SaveLoadPanel(String saveBtnText, String loadBtnText) {
         super();
-        FlowLayout flowLayout = (FlowLayout) getLayout();
+        final FlowLayout flowLayout = (FlowLayout) getLayout();
         flowLayout.setHgap(0);
         flowLayout.setVgap(0);
 
-        JButton btnSave = new JButton(saveBtnText);
+        final JButton btnSave = new JButton(saveBtnText);
         saveFilePicker = new FilePicker(this, btnSave, FilePicker.MODE_SAVE) {
+
             @Override
             protected void onSelect() {
-                String paramFilePath = getSelectedFilePath();
+                final String paramFilePath = getSelectedFilePath();
                 try {
                     saveToFile(paramFilePath);
-                } catch (IOException e) {
+                } catch (final IOException e) {
                     System.err.println(e.getMessage());
                 }
             }
         };
         add(btnSave);
 
-        JButton btnLoad = new JButton(loadBtnText);
+        final JButton btnLoad = new JButton(loadBtnText);
         loadFilePicker = new FilePicker(this, btnLoad, FilePicker.MODE_OPEN) {
+
             @Override
             protected void onSelect() {
-                String paramFilePath = getSelectedFilePath();
+                final String paramFilePath = getSelectedFilePath();
                 loadFromFile(paramFilePath);
             }
         };
         add(btnLoad);
     }
-    
+
     public void addFileTypeFilter(String extension, String description) {
         loadFilePicker.addFileTypeFilter(extension, description);
         saveFilePicker.addFileTypeFilter(extension, description);

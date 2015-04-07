@@ -14,7 +14,7 @@ public abstract class JFileEditorWindow extends JLoggerWindow {
 
     public JFileEditorWindow(String title, JPanel content) {
         super(title);
-        JPanel paramPanel = new JPanel();
+        final JPanel paramPanel = new JPanel();
         paramPanel.setLayout(new BoxLayout(paramPanel, BoxLayout.Y_AXIS));
         paramPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
         if (content != null) {
@@ -24,6 +24,7 @@ public abstract class JFileEditorWindow extends JLoggerWindow {
             paramPanel.add(Box.createVerticalStrut(5));
         }
         paramPanel.add(new SaveLoadPanel() {
+
             @Override
             public void saveToFile(String filePath) {
                 JFileEditorWindow.this.saveToFile(filePath);

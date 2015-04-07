@@ -7,9 +7,11 @@ import javax.swing.SwingUtilities;
 
 public class PrintStreamCapturer extends PrintStream {
 
-    private JTextArea text;
+    private final JTextArea text;
+
     private boolean atLineStart;
-    private String indent;
+
+    private final String indent;
 
     public PrintStreamCapturer(JTextArea textArea, PrintStream capturedStream, String prefix) {
         super(capturedStream);
@@ -24,13 +26,10 @@ public class PrintStreamCapturer extends PrintStream {
 
     private void writeToTextArea(final String str) {
         if (text != null) {
-            SwingUtilities.invokeLater(new Runnable() {
-                @Override
-                public void run() {
-                    synchronized (text) {
-                        text.setCaretPosition(text.getDocument().getLength());
-                        text.append(str);
-                    }
+            SwingUtilities.invokeLater(() -> {
+                synchronized (text) {
+                    text.setCaretPosition(text.getDocument().getLength());
+                    text.append(str);
                 }
             });
 
@@ -38,15 +37,16 @@ public class PrintStreamCapturer extends PrintStream {
     }
 
     private void write(String str) {
-        String[] s = str.split("\n", -1);
-        if (s.length == 0)
+        final String[] s = str.split("\n", -1);
+        if (s.length == 0) {
             return;
+        }
         for (int i = 0; i < s.length - 1; i++) {
             writeWithPotentialIndent(s[i]);
             writeWithPotentialIndent("\n");
             atLineStart = true;
         }
-        String last = s[s.length - 1];
+        final String last = s[s.length - 1];
         if (!last.equals("")) {
             writeWithPotentialIndent(last);
         }
@@ -223,7 +223,7 @@ public class PrintStreamCapturer extends PrintStream {
 
     @Override
     public void println(Object x) {
-        String s = String.valueOf(x);
+        final String s = String.valueOf(x);
         synchronized (this) {
             print(s);
             newLine();

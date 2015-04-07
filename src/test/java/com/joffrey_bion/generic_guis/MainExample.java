@@ -23,13 +23,7 @@ public class MainExample {
 
     public static void main(String[] args) {
         if (args.length == 0) {
-            SwingUtilities.invokeLater(new Runnable() {
-
-                @Override
-                public void run() {
-                    openWindow();
-                }
-            });
+            SwingUtilities.invokeLater(() -> openWindow());
         } else if (args.length == NB_ARGS) {
             processFile(args[ARG_SOURCE], args[ARG_DEST]);
         } else {
@@ -47,9 +41,9 @@ public class MainExample {
     private static void openWindow() {
         LookAndFeel.setSystemLookAndFeel();
         // file pickers source and destination
-        JFilePickersPanel filePickers = new JFilePickersPanel("Input file", "Output file");
+        final JFilePickersPanel filePickers = new JFilePickersPanel("Input file", "Output file");
         @SuppressWarnings("serial")
-        JFileProcessorWindow frame = new JFileProcessorWindow("Example", filePickers, null, "Process") {
+        final JFileProcessorWindow frame = new JFileProcessorWindow("Example", filePickers, null, "Process") {
 
             @Override
             public void process(String[] inPaths, String[] outPaths, int processBtnIndex) {
@@ -80,9 +74,9 @@ public class MainExample {
             // process the files here
 
             System.out.println("Success.");
-        } catch (FileNotFoundException e) {
+        } catch (final FileNotFoundException e) {
             System.err.println("File not found: " + e.getMessage());
-        } catch (IOException e) {
+        } catch (final IOException e) {
             System.err.println(e.getMessage());
         }
     }
@@ -96,7 +90,7 @@ public class MainExample {
         if (extPosition == -1) {
             extPosition = sourceName.length();
         }
-        StringBuilder b = new StringBuilder(sourceName.substring(0, extPosition));
+        final StringBuilder b = new StringBuilder(sourceName.substring(0, extPosition));
         b.append(insert);
         b.append(sourceName.substring(extPosition));
         return b.toString();

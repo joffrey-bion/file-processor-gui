@@ -2,7 +2,6 @@ package com.jbion.utils.fpgui.fpickers;
 
 import java.awt.Component;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -11,21 +10,24 @@ import javax.swing.JTextField;
 import javax.swing.filechooser.FileFilter;
 
 public class FilePicker {
+
     public static final int MODE_OPEN = 1;
+
     public static final int MODE_SAVE = 2;
 
-    private Component parent;
-    private JTextField pathTextField;
-    private JFileChooser fileChooser;
-    private int mode;
+    private final Component parent;
+
+    private final JTextField pathTextField;
+
+    private final JFileChooser fileChooser;
+
+    private final int mode;
 
     /**
-     * Associates a {@link JFileChooser} to the specified button, in the specified
-     * mode.
-     * 
+     * Associates a {@link JFileChooser} to the specified button, in the specified mode.
+     *
      * @param parent
-     *            The parent {@link Component} used to open the file chooser window
-     *            from.
+     *            The parent {@link Component} used to open the file chooser window from.
      * @param browseButton
      *            The {@link JButton} triggering the file chooser.
      * @param mode
@@ -36,15 +38,14 @@ public class FilePicker {
     }
 
     /**
-     * Associates a {@link JFileChooser} to the specified button and text field, in
-     * the specified mode.
-     * 
+     * Associates a {@link JFileChooser} to the specified button and text field, in the specified
+     * mode.
+     *
      * @param parent
-     *            The parent {@link Component} used to open the file chooser window
-     *            from.
+     *            The parent {@link Component} used to open the file chooser window from.
      * @param pathTextField
-     *            A text field to allow the user to enter manually the file's path.
-     *            This text field is updated if the user uses the browse button.
+     *            A text field to allow the user to enter manually the file's path. This text field
+     *            is updated if the user uses the browse button.
      * @param browseButton
      *            The {@link JButton} triggering the file chooser.
      * @param mode
@@ -58,12 +59,7 @@ public class FilePicker {
         if (browseButton == null) {
             throw new IllegalArgumentException("browseButton can't be null");
         }
-        browseButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent evt) {
-                buttonActionPerformed(evt);
-            }
-        });
+        browseButton.addActionListener(evt -> buttonActionPerformed(evt));
     }
 
     private void buttonActionPerformed(ActionEvent evt) {
@@ -84,16 +80,17 @@ public class FilePicker {
     }
 
     public void addFileTypeFilter(String extension, String description) {
-        FileTypeFilter filter = new FileTypeFilter(extension, description);
+        final FileTypeFilter filter = new FileTypeFilter(extension, description);
         fileChooser.addChoosableFileFilter(filter);
         fileChooser.setFileFilter(filter);
     }
 
     public String getSelectedFilePath() {
         if (pathTextField == null) {
-            File file = fileChooser.getSelectedFile();
-            if (file == null)
+            final File file = fileChooser.getSelectedFile();
+            if (file == null) {
                 return "";
+            }
             return file.getAbsolutePath();
         } else {
             return pathTextField.getText();
@@ -114,8 +111,9 @@ public class FilePicker {
 
     private class FileTypeFilter extends FileFilter {
 
-        private String extension;
-        private String description;
+        private final String extension;
+
+        private final String description;
 
         public FileTypeFilter(String extension, String description) {
             this.extension = extension;
