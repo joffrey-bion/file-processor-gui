@@ -1,7 +1,6 @@
 package com.jbion.utils.fpgui.fpickers;
 
 import java.awt.Component;
-import java.awt.event.ActionEvent;
 import java.io.File;
 
 import javax.swing.JButton;
@@ -59,10 +58,10 @@ public class FilePicker {
         if (browseButton == null) {
             throw new IllegalArgumentException("browseButton can't be null");
         }
-        browseButton.addActionListener(evt -> buttonActionPerformed(evt));
+        browseButton.addActionListener(event -> buttonActionPerformed());
     }
 
-    private void buttonActionPerformed(ActionEvent evt) {
+    private void buttonActionPerformed() {
         int userOption = JFileChooser.CANCEL_OPTION;
         if (mode == MODE_OPEN) {
             userOption = fileChooser.showOpenDialog(parent);
