@@ -14,15 +14,17 @@ import com.jbion.utils.fpgui.fpickers.JFilePickersPanel;
 import com.jbion.utils.fpgui.gwindows.JFileProcessorWindow;
 
 public class MainExample {
-    
+
     private static final int NB_ARGS = 2;
-    
+
     private static final int ARG_SOURCE = 0;
+
     private static final int ARG_DEST = 1;
-    
+
     public static void main(String[] args) {
         if (args.length == 0) {
             SwingUtilities.invokeLater(new Runnable() {
+
                 @Override
                 public void run() {
                     openWindow();
@@ -34,8 +36,7 @@ public class MainExample {
             printUsage();
         }
     }
-    
-    
+
     private static void printUsage() {
         System.out.println("Usage: java MainExample <source> <dest>");
     }
@@ -48,8 +49,8 @@ public class MainExample {
         // file pickers source and destination
         JFilePickersPanel filePickers = new JFilePickersPanel("Input file", "Output file");
         @SuppressWarnings("serial")
-        JFileProcessorWindow frame = new JFileProcessorWindow("Example", filePickers,
-                null, "Process") {
+        JFileProcessorWindow frame = new JFileProcessorWindow("Example", filePickers, null, "Process") {
+
             @Override
             public void process(String[] inPaths, String[] outPaths, int processBtnIndex) {
                 clearLog();
@@ -58,32 +59,27 @@ public class MainExample {
         };
         frame.setVisible(true);
     }
-    
+
     private static void processFile(String source, String dest) {
         if (source == null || "".equals(source)) {
             System.err.println("No input file selected.");
             return;
         }
-        try {
-            System.out.println("Opening '" + source + "'");
-            BufferedReader in = new BufferedReader(new FileReader(source));
-            String destFilename;
-            if (dest == null || "".equals(dest)) {
-                System.out.println("No output file selected.");
-                destFilename = generateDestFilename(source);
-                System.out.println("Auto output filename: " + destFilename);
-            } else {
-                destFilename = dest;
-            }
-            System.out.println("Opening/Creating '" + destFilename + "'");
-            BufferedWriter out = new BufferedWriter(new FileWriter(destFilename));
+        String destFilename;
+        if (dest == null || "".equals(dest)) {
+            System.out.println("No output file selected.");
+            destFilename = generateDestFilename(source);
+            System.out.println("Auto output filename: " + destFilename);
+        } else {
+            destFilename = dest;
+        }
+        try (BufferedReader in = new BufferedReader(new FileReader(source));
+                BufferedWriter out = new BufferedWriter(new FileWriter(destFilename))) {
             System.out.println("Processing...");
 
-            // process the file here
-            
+            // process the files here
+
             System.out.println("Success.");
-            in.close();
-            out.close();
         } catch (FileNotFoundException e) {
             System.err.println("File not found: " + e.getMessage());
         } catch (IOException e) {
@@ -94,7 +90,7 @@ public class MainExample {
     private static String generateDestFilename(String source) {
         return addBeforeExt(source, "-out");
     }
-    
+
     private static String addBeforeExt(String sourceName, String insert) {
         int extPosition = sourceName.lastIndexOf(".");
         if (extPosition == -1) {
